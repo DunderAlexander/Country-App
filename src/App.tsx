@@ -1,10 +1,12 @@
 import { Header } from "./components/Header";
+import Inputs from "./components/Inputs";
 
 const App = () => {
   return (
-    <div>
+    <>
       <Header />
-    </div>
+      <Inputs />
+    </>
   );
 };
 
