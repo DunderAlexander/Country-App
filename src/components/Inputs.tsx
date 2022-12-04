@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 const Inputs = () => {
   return (
-    <div className="py-6 px-5 drop-shadow-md flex flex-col">
+    <div className="py-6 px-14 drop-shadow-md flex flex-col">
       <form
         action=""
         className="flex flex-col gap-10 md:flex-row md:justify-between relative"
