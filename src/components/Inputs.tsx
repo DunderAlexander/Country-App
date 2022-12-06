@@ -1,6 +1,18 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-const Inputs = () => {
+
+interface InputsProps {
+  query: string;
+  setQuery: Function;
+  handleFilterCountries: Function;
+  countriesList: Array<{}>;
+}
+const Inputs: React.FC<InputsProps> = ({
+  query,
+  setQuery,
+  handleFilterCountries,
+  countriesList,
+}) => {
   return (
     <div className="py-6 px-14 drop-shadow-md flex flex-col">
       <form
@@ -19,6 +31,11 @@ const Inputs = () => {
           className="p-4 pl-12 bg-DarkBlue text-White rounded-lg md:w-1/3"
           type="search"
           placeholder="Search for a country..."
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            handleFilterCountries(countriesList);
+          }}
         />
         <select className="p-4 bg-DarkBlue text-White rounded-lg w-1/2 md:w-[15rem]">
           <option>Filter by Region</option>

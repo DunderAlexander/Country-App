@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 export const Header = () => {
   return (
     <div className="flex flex-row justify-between items-center bg-DarkBlue py-8 px-16 shadow-md">
