@@ -42,6 +42,7 @@ const Inputs: React.FC<InputsProps> = ({
         >
           <option>Filter by Region</option>
           <option value="Europe">Europe</option>
+          <option value="Asia">Asia</option>
           <option value="Americas">America</option>
           <option value="Africa">Africa</option>
           <option value="Oceania">Oceania</option>

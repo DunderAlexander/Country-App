@@ -27,23 +27,40 @@ const App = () => {
     getCountries();
   }, []);
 
-  useEffect(() => {
-    setSearchResult(
-      countriesList.filter((country) =>
-        country.name.toLowerCase().startsWith(query.toLowerCase())
-      )
-    );
-  }, [query]);
+  // useEffect(() => {
+  //   setSearchResult(
+  //     countriesList.filter((country) =>
+  //       country.name.toLowerCase().startsWith(query.toLowerCase())
+  //     )
+  //   );
+  // }, [query]);
+
+  // useEffect(() => {
+  //   if (filterRegion === "Filter by Region") {
+  //     setSearchResult(countriesList);
+  //   } else {
+  //     setSearchResult(
+  //       countriesList.filter((country) => country.region === filterRegion)
+  //     );
+  //   }
+  // }, [filterRegion]);
 
   useEffect(() => {
-    if (filterRegion === "Filter by Region") {
-      setSearchResult(countriesList);
-    } else {
-      setSearchResult(
-        countriesList.filter((country) => country.region === filterRegion)
-      );
-    }
-  }, [filterRegion]);
+    setSearchResult(
+      countriesList.filter((country) => {
+        // First, check if the country's name matches the query
+        let matchesQuery = country.name
+          .toLowerCase()
+          .startsWith(query.toLowerCase());
+        // Then, check if the country's region matches the filterRegion, unless filterRegion is "Filter by Region"
+        let matchesRegion =
+          filterRegion === "Filter by Region" ||
+          country.region === filterRegion;
+        // If the country matches both the query and region, return it
+        return matchesQuery && matchesRegion;
+      })
+    );
+  }, [query, filterRegion]);
 
   // A function to get all the countries to display on screen.
   const getCountries = (): void => {
@@ -72,7 +89,8 @@ const App = () => {
                 setFilterRegion={setFilterRegion}
               />
               <div className="mt-16 p-16 grid grid-flow-row place-items-start gap-12 md:grid-cols-2 lg:grid-cols-4">
-                {!query
+                {searchResult.length === 0 &&
+                filterRegion === "Filter by Region"
                   ? countriesList.map((country) => (
                       <CountryCard
                         key={country.name}
