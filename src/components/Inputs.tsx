@@ -4,14 +4,12 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 interface InputsProps {
   query: string;
   setQuery: Function;
-  handleFilterCountries: Function;
-  countriesList: Array<{}>;
+  setFilterRegion: Function;
 }
 const Inputs: React.FC<InputsProps> = ({
   query,
   setQuery,
-  handleFilterCountries,
-  countriesList,
+  setFilterRegion,
 }) => {
   return (
     <div className="py-6 px-14 drop-shadow-md flex flex-col">
@@ -34,14 +32,19 @@ const Inputs: React.FC<InputsProps> = ({
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);
-            handleFilterCountries(countriesList);
           }}
         />
-        <select className="p-4 bg-DarkBlue text-White rounded-lg w-1/2 md:w-[15rem]">
+        <select
+          className="p-4 bg-DarkBlue text-White rounded-lg w-1/2 md:w-[15rem]"
+          onChange={(e) => {
+            setFilterRegion(e.target.value);
+          }}
+        >
           <option>Filter by Region</option>
-          <option value="America">America</option>
-          <option value="Africa">Africa</option>
           <option value="Europe">Europe</option>
+          <option value="Americas">America</option>
+          <option value="Africa">Africa</option>
+          <option value="Oceania">Oceania</option>
         </select>
       </form>
     </div>

@@ -15,18 +15,38 @@ type countriesListType = Array<{
   flag: string;
   independent: boolean;
 }>;
+
 const App = () => {
   const [countriesList, setCountriesList] = useState<countriesListType>([]);
   const [query, setQuery] = useState<string>("");
   const [searchResult, setSearchResult] = useState<countriesListType>([]);
+  const [filterRegion, setFilterRegion] = useState<string>("Filter by Region");
 
-  //Display all of the countries from the getCountries() immediately.
-  useEffect(() => {
+  // Display all of the countries from the getCountries() immediately.
+  useEffect((): void => {
     getCountries();
   }, []);
 
-  //A function to get all the countries to display on screen.
-  const getCountries = () => {
+  useEffect(() => {
+    setSearchResult(
+      countriesList.filter((country) =>
+        country.name.toLowerCase().startsWith(query.toLowerCase())
+      )
+    );
+  }, [query]);
+
+  useEffect(() => {
+    if (filterRegion === "Filter by Region") {
+      setSearchResult(countriesList);
+    } else {
+      setSearchResult(
+        countriesList.filter((country) => country.region === filterRegion)
+      );
+    }
+  }, [filterRegion]);
+
+  // A function to get all the countries to display on screen.
+  const getCountries = (): void => {
     fetch(
       `https://restcountries.com/v2/all?fields=name,capital,region,population,flag`
     )
@@ -34,13 +54,8 @@ const App = () => {
       .then(setCountriesList);
   };
 
-  //A function to filter all the countries.
-  const filterCountries = (countriesList: countriesListType): void => {
-    setSearchResult(
-      countriesList.filter((country) =>
-        country.name.toLowerCase().startsWith(query.toLowerCase())
-      )
-    );
+  const filterCountries = (filterRegion: string): void => {
+    // TO DO - write the actual function to filter countries by region. Make it work with searchCountries function.
   };
 
   return (
@@ -54,8 +69,7 @@ const App = () => {
               <Inputs
                 query={query}
                 setQuery={setQuery}
-                handleFilterCountries={filterCountries}
-                countriesList={countriesList}
+                setFilterRegion={setFilterRegion}
               />
               <div className="mt-16 p-16 grid grid-flow-row place-items-start gap-12 md:grid-cols-2 lg:grid-cols-4">
                 {!query

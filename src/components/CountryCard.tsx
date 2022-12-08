@@ -27,7 +27,7 @@ const CountryCard = ({
       <article className="py-10 px-6">
         <h1 className="pb-6 text-White font-bold text-xl">{name}</h1>
         <p className="text-White">
-          <b>Population:</b> {population}
+          <b>Population:</b> {population.toLocaleString("nl-NL")}
         </p>
         <p className="text-White">
           <b>Region:</b> {region}
