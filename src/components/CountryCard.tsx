@@ -19,7 +19,7 @@ const CountryCard = ({
     <div className="bg-DarkBlue rounded-md">
       <Link to={`/countries/${name}`}>
         <img
-          className="rounded-t-md w-80 aspect-video object-cover cursor-pointer"
+          className="rounded-t-md aspect-video object-cover cursor-pointer"
           src={flag}
           alt={name}
         />
