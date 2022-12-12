@@ -22,6 +22,7 @@ const App = () => {
   const [query, setQuery] = useState<string>("");
   const [searchResult, setSearchResult] = useState<countriesListType>([]);
   const [filterRegion, setFilterRegion] = useState<string>("Filter by Region");
+  const [dark, setDark] = useState(false);
 
   // Display all of the countries from the getCountries() immediately.
   useEffect((): void => {
@@ -52,52 +53,58 @@ const App = () => {
       .then(setCountriesList);
   };
 
+  function toggleDarkMode() {
+    setDark(!dark);
+  }
+
   return (
-    <>
-      <Header />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <Inputs
-                query={query}
-                setQuery={setQuery}
-                setFilterRegion={setFilterRegion}
-              />
-              <div className="mt-16 p-16 grid grid-flow-row gap-12 md:grid-cols-2 lg:grid-cols-4">
-                {searchResult.length === 0 &&
-                filterRegion === "Filter by Region"
-                  ? countriesList.map((country) => (
-                      <CountryCard
-                        key={country.name}
-                        name={country.name}
-                        capital={country.capital}
-                        region={country.region}
-                        population={country.population}
-                        flag={country.flag}
-                      />
-                    ))
-                  : searchResult.map((country) => (
-                      <CountryCard
-                        key={country.name}
-                        name={country.name}
-                        capital={country.capital}
-                        region={country.region}
-                        population={country.population}
-                        flag={country.flag}
-                      />
-                    ))}
-              </div>
-            </>
-          }
-        />
-        <Route
-          path="/countries/:country"
-          element={<CountryPage countriesList={countriesList} />}
-        />
-      </Routes>
-    </>
+    <div className={`min-h-screen ${dark && "dark"}`}>
+      <div className="bg-VeryLightGray dark:bg-VeryDarkBlue_DM min-h-screen">
+        <Header toggleDarkMode={toggleDarkMode} />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <Inputs
+                  query={query}
+                  setQuery={setQuery}
+                  setFilterRegion={setFilterRegion}
+                />
+                <div className="lg:mt-0 mt-16 p-14 grid grid-flow-row gap-12 md:grid-cols-2 lg:grid-cols-4 drop-shadow-lg">
+                  {searchResult.length === 0 &&
+                  filterRegion === "Filter by Region"
+                    ? countriesList.map((country) => (
+                        <CountryCard
+                          key={country.name}
+                          name={country.name}
+                          capital={country.capital}
+                          region={country.region}
+                          population={country.population}
+                          flag={country.flag}
+                        />
+                      ))
+                    : searchResult.map((country) => (
+                        <CountryCard
+                          key={country.name}
+                          name={country.name}
+                          capital={country.capital}
+                          region={country.region}
+                          population={country.population}
+                          flag={country.flag}
+                        />
+                      ))}
+                </div>
+              </>
+            }
+          />
+          <Route
+            path="/countries/:country"
+            element={<CountryPage countriesList={countriesList} />}
+          />
+        </Routes>
+      </div>
+    </div>
   );
 };
 

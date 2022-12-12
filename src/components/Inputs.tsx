@@ -22,11 +22,11 @@ const Inputs: React.FC<InputsProps> = ({
           style={{
             position: "absolute",
             transform: "translate(120%, 125%)",
-            color: "white",
           }}
+          className="dark:text-White text-DarkGray"
         />
         <input
-          className="p-4 pl-12 bg-DarkBlue text-White rounded-lg md:w-1/3"
+          className="p-4 pl-12 bg-White dark:bg-DarkBlue text-VeryDarkBlue_LM dark:text-White rounded-lg md:w-1/3"
           type="search"
           placeholder="Search for a country..."
           value={query}
@@ -35,7 +35,7 @@ const Inputs: React.FC<InputsProps> = ({
           }}
         />
         <select
-          className="p-4 bg-DarkBlue text-White rounded-lg w-1/2 md:w-[15rem]"
+          className="p-4 bg-White dark:bg-DarkBlue text-VeryDarkBlue_LM dark:text-White rounded-lg w-1/2 md:w-[15rem]"
           onChange={(e) => {
             setFilterRegion(e.target.value);
           }}

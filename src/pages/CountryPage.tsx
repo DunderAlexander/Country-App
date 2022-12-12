@@ -32,7 +32,7 @@ const CountryPage = ({ countriesList }: any) => {
   if (isLoading) {
     // TO DO: write a proper loader component
     return (
-      <h1 className="flex flex-col justify-center items-center text-White font-bold">
+      <h1 className="flex flex-col justify-center items-center text-VeryDarkBlue_LM dark:text-White  font-bold">
         Loading...
       </h1>
     );
@@ -40,7 +40,7 @@ const CountryPage = ({ countriesList }: any) => {
   return (
     <>
       <Link to={"/"}>
-        <button className="bg-DarkBlue mt-12 ml-16 py-2 px-8 drop-shadow-lg text-White font-thin">
+        <button className="bg-White dark:bg-DarkBlue mt-12 ml-16 py-2 px-8 drop-shadow-lg text-VeryDarkBlue_LM dark:text-White font-thin">
           <FontAwesomeIcon
             icon={faArrowLeft}
             style={{ paddingRight: "12px" }}
@@ -49,8 +49,12 @@ const CountryPage = ({ countriesList }: any) => {
         </button>
       </Link>
 
-      <div className="text-White grid place-content-center gap-10 my-14 mx-[64px] lg:grid-cols-2 lg:gap-x-28">
-        <img src={countryInfo[0].flags.svg} alt="" />
+      <div className="text-VeryDarkBlue_LM dark:text-White grid place-content-center gap-10 mt-14 mx-[64px] lg:grid-cols-2 lg:gap-x-28">
+        <img
+          src={countryInfo[0].flags.svg}
+          alt={countryInfo[0].name}
+          className="drop-shadow-md"
+        />
         <div className="lg:grid lg:grid-cols-2 lg:place-content-center lg:gap-y-14 flex flex-col gap-10">
           <div className="flex flex-col gap-3 lg:justify-center">
             <h1 className="font-bold text-2xl my-5">{countryInfo[0].name}</h1>
@@ -109,7 +113,7 @@ const CountryPage = ({ countriesList }: any) => {
                   return (
                     <Link to={`../countries/${fullName.name}`}>
                       <button
-                        className="flex flex-col items-center bg-DarkBlue py-2 px-8 drop-shadow-lg text-White font-thin text-xs text-center w-[100%]"
+                        className="flex flex-col items-center bg-White dark:bg-DarkBlue py-2 px-8 drop-shadow-lg text-VeryDarkBlue_LM dark:text-White font-thin text-xs text-center w-[100%]"
                         key={alpha3Code}
                       >
                         {fullName.name}
