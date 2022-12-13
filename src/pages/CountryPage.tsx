@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 
-const CountryPage = ({ countriesList, getCountries }: any) => {
+const CountryPage = ({ countriesList }: any) => {
   const { country } = useParams();
   const [countryInfo, setCountryInfo] = useState<any>({});
   const [isLoading, setIsLoading] = useState(true);
@@ -24,6 +24,7 @@ const CountryPage = ({ countriesList, getCountries }: any) => {
 
   useEffect((): void => {
     fetchCountryInfo(country, () => {
+      setTimeout(() => {}, 5000);
       setIsLoading(false);
     });
   }, [country]);
@@ -105,18 +106,20 @@ const CountryPage = ({ countriesList, getCountries }: any) => {
               <div className="grid grid-cols-4 gap-3 mt-5">
                 {" "}
                 {countryInfo[0].borders.map((alpha3Code: string) => {
-                  const fullName = countriesList.find(
+                  const borderCountry = countriesList.find(
                     (obj: any) => obj.alpha3Code === alpha3Code
                   );
                   return (
-                    <Link to={`../countries/${fullName.name}`}>
-                      <button
-                        className="flex flex-col items-center bg-White dark:bg-DarkBlue py-2 px-8 drop-shadow-lg text-VeryDarkBlue_LM dark:text-White font-thin text-xs text-center w-[100%]"
-                        key={alpha3Code}
-                      >
-                        {fullName.name}
-                      </button>
-                    </Link>
+                    borderCountry !== undefined && (
+                      <Link to={`../countries/${borderCountry.name}`}>
+                        <button
+                          className="flex flex-col items-center bg-White dark:bg-DarkBlue py-2 px-8 drop-shadow-lg text-VeryDarkBlue_LM dark:text-White font-thin text-xs text-center w-[100%]"
+                          key={alpha3Code}
+                        >
+                          {borderCountry.name}
+                        </button>
+                      </Link>
+                    )
                   );
                 })}
               </div>
