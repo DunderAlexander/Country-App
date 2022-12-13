@@ -5,11 +5,13 @@ interface InputsProps {
   query: string;
   setQuery: Function;
   setFilterRegion: Function;
+  filter: string;
 }
 const Inputs: React.FC<InputsProps> = ({
   query,
   setQuery,
   setFilterRegion,
+  filter,
 }) => {
   return (
     <div className="py-6 px-14 drop-shadow-md flex flex-col">
@@ -39,6 +41,7 @@ const Inputs: React.FC<InputsProps> = ({
           onChange={(e) => {
             setFilterRegion(e.target.value);
           }}
+          value={filter}
         >
           <option>Filter by Region</option>
           <option value="Europe">Europe</option>

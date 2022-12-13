@@ -2,9 +2,8 @@ import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
-import { countriesListType } from "../App";
 
-const CountryPage = ({ countriesList }: any) => {
+const CountryPage = ({ countriesList, getCountries }: any) => {
   const { country } = useParams();
   const [countryInfo, setCountryInfo] = useState<any>({});
   const [isLoading, setIsLoading] = useState(true);
@@ -23,14 +22,13 @@ const CountryPage = ({ countriesList }: any) => {
       });
   };
 
-  useEffect(() => {
+  useEffect((): void => {
     fetchCountryInfo(country, () => {
       setIsLoading(false);
     });
   }, [country]);
 
   if (isLoading) {
-    // TO DO: write a proper loader component
     return (
       <h1 className="flex flex-col justify-center items-center text-VeryDarkBlue_LM dark:text-White  font-bold">
         Loading...

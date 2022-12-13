@@ -69,6 +69,7 @@ const App = () => {
                 <Inputs
                   query={query}
                   setQuery={setQuery}
+                  filter={filterRegion}
                   setFilterRegion={setFilterRegion}
                 />
                 <div className="lg:mt-0 mt-16 p-14 grid grid-flow-row gap-12 md:grid-cols-2 lg:grid-cols-4 drop-shadow-lg">
@@ -100,7 +101,12 @@ const App = () => {
           />
           <Route
             path="/countries/:country"
-            element={<CountryPage countriesList={countriesList} />}
+            element={
+              <CountryPage
+                countriesList={countriesList}
+                getCountries={getCountries}
+              />
+            }
           />
         </Routes>
       </div>
