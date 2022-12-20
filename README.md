@@ -13,6 +13,16 @@ Users should be able to:
 - Click through to the border countries on the detail page
 - Toggle the color scheme between light and dark mode _(optional)_
 
+## Technology I used:
+
+- TypeScript
+- React.js
+- Tailwind
+- HTML
+- Vite
+- react-router-dom
+- FontAwesome icon library
+
 ## Live Site URL: [REST Countries App](https://dunder-country-app.netlify.app/)
 
 ## Main page
