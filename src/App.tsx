@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 // TODO: export all of the fetching and state logic into separate hook
 
-export type countriesListType = Array<{
+type countriesListType = Array<{
   name: string;
   capital: string | undefined;
   region: string;
