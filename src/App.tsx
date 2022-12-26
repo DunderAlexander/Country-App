@@ -5,7 +5,8 @@ import { Route, Routes } from "react-router-dom";
 import CountryPage from "./pages/CountryPage";
 import { useEffect, useState } from "react";
 import { RootState } from "./redux/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearchResult } from "./redux/slices/countriesSlice";
 
 // TODO: export all of the fetching and state logic into separate hook
 
@@ -21,12 +22,14 @@ type countriesListType = Array<{
 
 const App = () => {
   const [countriesList, setCountriesList] = useState<countriesListType>([]);
-  const [query, setQuery] = useState<string>("");
-  const [searchResult, setSearchResult] = useState<countriesListType>([]);
-  const [filterRegion, setFilterRegion] = useState<string>("Filter by Region");
+  // const [query, setQuery] = useState<string>("");
+  // const [searchResult, setSearchResult] = useState<countriesListType>([]);
+  // const [filterRegion, setFilterRegion] = useState<string>("Filter by Region");
 
-  // const [dark, setDark] = useState(false);
-  const dark = useSelector((state: RootState) => state.countries.dark);
+  const { dark, searchResult, query, filterRegion } = useSelector(
+    (state: RootState) => state.countries
+  );
+  const dispatch = useDispatch();
 
   // Display all of the countries from the getCountries() immediately.
   useEffect((): void => {
@@ -35,17 +38,16 @@ const App = () => {
 
   // Search and filter functionality
   useEffect(() => {
-    setSearchResult(
-      countriesList.filter((country) => {
-        let matchesQuery = country.name
-          .toLowerCase()
-          .startsWith(query.toLowerCase());
-        let matchesRegion =
-          filterRegion === "Filter by Region" ||
-          country.region === filterRegion;
-        return matchesQuery && matchesRegion;
-      })
-    );
+    const filteredCountriesList = countriesList.filter((country) => {
+      let matchesQuery = country.name
+        .toLowerCase()
+        .startsWith(query.toLowerCase());
+      let matchesRegion =
+        filterRegion === "Filter by Region" || country.region === filterRegion;
+      return matchesQuery && matchesRegion;
+    });
+
+    dispatch(setSearchResult(filteredCountriesList));
   }, [query, filterRegion]);
 
   // A function to get all the countries to display on screen.
@@ -70,12 +72,7 @@ const App = () => {
             path="/"
             element={
               <>
-                <Inputs
-                  query={query}
-                  setQuery={setQuery}
-                  filter={filterRegion}
-                  setFilterRegion={setFilterRegion}
-                />
+                <Inputs />
                 <div className="lg:mt-0 mt-16 p-14 grid grid-flow-row gap-12 md:grid-cols-2 lg:grid-cols-4 drop-shadow-lg">
                   {searchResult.length === 0 &&
                   filterRegion === "Filter by Region"

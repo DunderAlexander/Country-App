@@ -1,18 +1,14 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import { setFilterRegion, setQuery } from "../redux/slices/countriesSlice";
 
-interface InputsProps {
-  query: string;
-  setQuery: Function;
-  setFilterRegion: Function;
-  filter: string;
-}
-const Inputs: React.FC<InputsProps> = ({
-  query,
-  setQuery,
-  setFilterRegion,
-  filter,
-}) => {
+const Inputs = () => {
+  const { query, filterRegion } = useSelector(
+    (state: RootState) => state.countries
+  );
+  const dispatch = useDispatch();
   return (
     <div className="py-6 px-14 drop-shadow-md flex flex-col">
       <form
@@ -33,15 +29,15 @@ const Inputs: React.FC<InputsProps> = ({
           placeholder="Search for a country..."
           value={query}
           onChange={(e) => {
-            setQuery(e.target.value);
+            dispatch(setQuery(e.target.value));
           }}
         />
         <select
           className="p-4 bg-White dark:bg-DarkBlue text-VeryDarkBlue_LM dark:text-White rounded-lg w-1/2 md:w-[15rem]"
           onChange={(e) => {
-            setFilterRegion(e.target.value);
+            dispatch(setFilterRegion(e.target.value));
           }}
-          value={filter}
+          value={filterRegion}
         >
           <option>Filter by Region</option>
           <option value="Europe">Europe</option>

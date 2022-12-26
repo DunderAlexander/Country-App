@@ -1,12 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-// const [countriesList, setCountriesList] = useState<countriesListType>([]);
-// const [query, setQuery] = useState<string>("");
-// const [searchResult, setSearchResult] = useState<countriesListType>([]);
-// const [filterRegion, setFilterRegion] = useState<string>("Filter by Region");
-// const [dark, setDark] = useState(false);
-
 type countriesListType = Array<{
   name: string;
   capital: string | undefined;
@@ -20,7 +14,7 @@ type countriesListType = Array<{
 const initialState = {
   countriesList: <countriesListType>[],
   query: "",
-  searchResult: "",
+  searchResult: <countriesListType>[],
   filterRegion: "Filter by Region",
   dark: false,
 };
@@ -29,11 +23,21 @@ export const countriesSlice = createSlice({
   name: "countries",
   initialState,
   reducers: {
+    setQuery: (state, action: PayloadAction<string>) => {
+      state.query = action.payload;
+    },
+    setSearchResult: (state, action: PayloadAction<countriesListType>) => {
+      state.searchResult = action.payload;
+    },
+    setFilterRegion: (state, action: PayloadAction<string>) => {
+      state.filterRegion = action.payload;
+    },
     setDark: (state) => {
       state.dark = !state.dark;
     },
   },
 });
-export const { setDark } = countriesSlice.actions;
+export const { setDark, setSearchResult, setQuery, setFilterRegion } =
+  countriesSlice.actions;
 
 export default countriesSlice.reducer;
