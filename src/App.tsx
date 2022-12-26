@@ -4,6 +4,8 @@ import Inputs from "./components/Inputs";
 import { Route, Routes } from "react-router-dom";
 import CountryPage from "./pages/CountryPage";
 import { useEffect, useState } from "react";
+import { RootState } from "./redux/store";
+import { useSelector } from "react-redux";
 
 // TODO: export all of the fetching and state logic into separate hook
 
@@ -22,7 +24,9 @@ const App = () => {
   const [query, setQuery] = useState<string>("");
   const [searchResult, setSearchResult] = useState<countriesListType>([]);
   const [filterRegion, setFilterRegion] = useState<string>("Filter by Region");
-  const [dark, setDark] = useState(false);
+
+  // const [dark, setDark] = useState(false);
+  const dark = useSelector((state: RootState) => state.countries.dark);
 
   // Display all of the countries from the getCountries() immediately.
   useEffect((): void => {
@@ -53,14 +57,14 @@ const App = () => {
       .then(setCountriesList);
   };
 
-  function toggleDarkMode() {
-    setDark(!dark);
-  }
+  // function toggleDarkMode() {
+  //   setDark(!dark);
+  // }
 
   return (
     <div className={`min-h-screen ${dark && "dark"}`}>
       <div className="bg-VeryLightGray dark:bg-VeryDarkBlue_DM min-h-screen">
-        <Header toggleDarkMode={toggleDarkMode} />
+        <Header />
         <Routes>
           <Route
             path="/"

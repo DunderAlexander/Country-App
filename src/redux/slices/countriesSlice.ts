@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit/dist/createSlice";
+import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 // const [countriesList, setCountriesList] = useState<countriesListType>([]);
@@ -34,3 +34,6 @@ export const countriesSlice = createSlice({
     },
   },
 });
+export const { setDark } = countriesSlice.actions;
+
+export default countriesSlice.reducer;
