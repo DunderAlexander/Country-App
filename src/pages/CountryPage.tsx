@@ -1,39 +1,30 @@
-import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../redux/store";
+import { fetchCountryInfo } from "../redux/slices/detailsSlice";
+import { useEffect } from "react";
+import { ClipLoader } from "react-spinners";
 
-const CountryPage = ({ countriesList }: any) => {
+const CountryPage = () => {
   const { country } = useParams();
-  const [countryInfo, setCountryInfo] = useState<any>({});
-  const [isLoading, setIsLoading] = useState(true);
-
-  // fetchCountryInfo has a callback function in it to make sure that loading would be set to false
-  const fetchCountryInfo = (
-    countryName: string | undefined,
-    callback: () => void
-  ): void => {
-    fetch(`https://restcountries.com/v2/name/${countryName}?fullText=true`)
-      .then((res) => res.json())
-      .then(setCountryInfo)
-      .then(callback)
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect((): void => {
-    fetchCountryInfo(country, () => {
-      setTimeout(() => {}, 5000);
-      setIsLoading(false);
-    });
-  }, [country]);
+  const { countriesList, dark } = useSelector(
+    (state: RootState) => state.countries
+  );
+  const { countryInfo, isLoading } = useSelector(
+    (state: RootState) => state.details
+  );
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(fetchCountryInfo(country));
+  }, [dispatch, country]);
 
   if (isLoading) {
     return (
-      <h1 className="flex flex-col justify-center items-center text-VeryDarkBlue_LM dark:text-White  font-bold">
-        Loading...
-      </h1>
+      <div className="absolute inset-0 flex justify-center items-center">
+        <ClipLoader loading={isLoading} color={dark ? "#ffffff" : "#000000"} />
+      </div>
     );
   }
   return (
@@ -84,7 +75,7 @@ const CountryPage = ({ countriesList }: any) => {
             <p>
               <b>Currencies:</b>{" "}
               {countryInfo[0].currencies
-                ? countryInfo[0].currencies.map((curr: any, index: number) =>
+                ? countryInfo[0].currencies.map((curr, index: number) =>
                     countryInfo[0].currencies.length - 1 > index
                       ? `${curr.name}, `
                       : `${curr.name}`
@@ -93,7 +84,7 @@ const CountryPage = ({ countriesList }: any) => {
             </p>
             <p>
               <b>Languages:</b>{" "}
-              {countryInfo[0].languages.map((lang: any, index: number) =>
+              {countryInfo[0].languages.map((lang, index: number) =>
                 countryInfo[0].languages.length - 1 > index
                   ? `${lang.name}, `
                   : `${lang.name}`
@@ -107,7 +98,7 @@ const CountryPage = ({ countriesList }: any) => {
                 {" "}
                 {countryInfo[0].borders.map((alpha3Code: string) => {
                   const borderCountry = countriesList.find(
-                    (obj: any) => obj.alpha3Code === alpha3Code
+                    (obj) => obj.alpha3Code === alpha3Code
                   );
                   return (
                     borderCountry !== undefined && (
