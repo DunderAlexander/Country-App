@@ -2,11 +2,14 @@ import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
-const CountryPage = ({ countriesList }: any) => {
+const CountryPage = () => {
   const { country } = useParams();
   const [countryInfo, setCountryInfo] = useState<any>({});
   const [isLoading, setIsLoading] = useState(true);
+  const { countriesList } = useSelector((state: RootState) => state.countries);
 
   // fetchCountryInfo has a callback function in it to make sure that loading would be set to false
   const fetchCountryInfo = (
@@ -24,7 +27,6 @@ const CountryPage = ({ countriesList }: any) => {
 
   useEffect((): void => {
     fetchCountryInfo(country, () => {
-      setTimeout(() => {}, 5000);
       setIsLoading(false);
     });
   }, [country]);

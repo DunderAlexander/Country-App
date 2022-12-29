@@ -3,12 +3,10 @@ import { Header } from "./components/Header";
 import Inputs from "./components/Inputs";
 import { Route, Routes } from "react-router-dom";
 import CountryPage from "./pages/CountryPage";
-import { useEffect, useState } from "react";
-import { RootState } from "./redux/store";
+import { useEffect } from "react";
+import { AppDispatch, RootState } from "./redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchResult } from "./redux/slices/countriesSlice";
-
-// TODO: export all of the fetching and state logic into separate hook
+import { fetchCountries, setSearchResult } from "./redux/slices/countriesSlice";
 
 type countriesListType = Array<{
   name: string;
@@ -21,20 +19,22 @@ type countriesListType = Array<{
 }>;
 
 const App = () => {
-  const [countriesList, setCountriesList] = useState<countriesListType>([]);
-  // const [query, setQuery] = useState<string>("");
-  // const [searchResult, setSearchResult] = useState<countriesListType>([]);
-  // const [filterRegion, setFilterRegion] = useState<string>("Filter by Region");
-
-  const { dark, searchResult, query, filterRegion } = useSelector(
-    (state: RootState) => state.countries
-  );
-  const dispatch = useDispatch();
+  // const [countriesList, setCountriesList] = useState<countriesListType>([]);
+  const {
+    dark,
+    searchResult,
+    query,
+    filterRegion,
+    countriesList,
+    isLoading,
+    error,
+  } = useSelector((state: RootState) => state.countries);
+  const dispatch = useDispatch<AppDispatch>();
 
   // Display all of the countries from the getCountries() immediately.
-  useEffect((): void => {
-    getCountries();
-  }, []);
+  useEffect(() => {
+    dispatch(fetchCountries());
+  }, [dispatch]);
 
   // Search and filter functionality
   useEffect(() => {
@@ -51,17 +51,13 @@ const App = () => {
   }, [query, filterRegion]);
 
   // A function to get all the countries to display on screen.
-  const getCountries = (): void => {
-    fetch(
-      `https://restcountries.com/v2/all?fields=name,capital,region,population,flag,alpha3Code`
-    )
-      .then((resolve) => resolve.json())
-      .then(setCountriesList);
-  };
-
-  // function toggleDarkMode() {
-  //   setDark(!dark);
-  // }
+  // const getCountries = (): void => {
+  //   fetch(
+  //     `https://restcountries.com/v2/all?fields=name,capital,region,population,flag,alpha3Code`
+  //   )
+  //     .then((resolve) => resolve.json())
+  //     .then(setCountriesList);
+  // };
 
   return (
     <div className={`min-h-screen ${dark && "dark"}`}>
@@ -100,15 +96,7 @@ const App = () => {
               </>
             }
           />
-          <Route
-            path="/countries/:country"
-            element={
-              <CountryPage
-                countriesList={countriesList}
-                getCountries={getCountries}
-              />
-            }
-          />
+          <Route path="/countries/:country" element={<CountryPage />} />
         </Routes>
       </div>
     </div>

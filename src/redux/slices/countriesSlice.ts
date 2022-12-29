@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 type countriesListType = Array<{
@@ -17,7 +17,19 @@ const initialState = {
   searchResult: <countriesListType>[],
   filterRegion: "Filter by Region",
   dark: false,
+  isLoading: false,
+  error: null,
 };
+
+export const fetchCountries = createAsyncThunk(
+  "countries/fetchCountries",
+  async () => {
+    const response = await fetch(
+      `https://restcountries.com/v2/all?fields=name,capital,region,population,flag,alpha3Code`
+    );
+    return response.json();
+  }
+);
 
 export const countriesSlice = createSlice({
   name: "countries",
@@ -35,6 +47,18 @@ export const countriesSlice = createSlice({
     setDark: (state) => {
       state.dark = !state.dark;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchCountries.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(fetchCountries.fulfilled, (state, action) => {
+      (state.isLoading = false), (state.countriesList = action.payload);
+    });
+    builder.addCase(fetchCountries.rejected, (state, action) => {
+      state.isLoading = true; //false
+      // state.error = action.error;
+    });
   },
 });
 export const { setDark, setSearchResult, setQuery, setFilterRegion } =
