@@ -22,6 +22,7 @@ Users should be able to:
 - Vite
 - react-router-dom
 - FontAwesome icon library
+- Redux Toolkit
 
 ## Live Site URL: [REST Countries App](https://dunder-country-app.netlify.app/)
 
