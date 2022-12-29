@@ -50,7 +50,7 @@ const App = () => {
             element={
               <>
                 <Inputs />
-                <div className="lg:mt-0 mt-16 p-14 grid grid-flow-row gap-12 md:grid-cols-2 lg:grid-cols-4 drop-shadow-lg">
+                <div className="mt-0 p-14 grid grid-flow-row gap-12 md:grid-cols-2 lg:grid-cols-4 drop-shadow-lg">
                   {searchResult.length === 0 &&
                   filterRegion === "Filter by Region"
                     ? countriesList.map((country) => (
