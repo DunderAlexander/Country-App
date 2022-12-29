@@ -19,24 +19,14 @@ type countriesListType = Array<{
 }>;
 
 const App = () => {
-  // const [countriesList, setCountriesList] = useState<countriesListType>([]);
-  const {
-    dark,
-    searchResult,
-    query,
-    filterRegion,
-    countriesList,
-    isLoading,
-    error,
-  } = useSelector((state: RootState) => state.countries);
+  const { dark, searchResult, query, filterRegion, countriesList } =
+    useSelector((state: RootState) => state.countries);
   const dispatch = useDispatch<AppDispatch>();
 
-  // Display all of the countries from the getCountries() immediately.
   useEffect(() => {
     dispatch(fetchCountries());
   }, [dispatch]);
 
-  // Search and filter functionality
   useEffect(() => {
     const filteredCountriesList = countriesList.filter((country) => {
       let matchesQuery = country.name
@@ -49,15 +39,6 @@ const App = () => {
 
     dispatch(setSearchResult(filteredCountriesList));
   }, [query, filterRegion]);
-
-  // A function to get all the countries to display on screen.
-  // const getCountries = (): void => {
-  //   fetch(
-  //     `https://restcountries.com/v2/all?fields=name,capital,region,population,flag,alpha3Code`
-  //   )
-  //     .then((resolve) => resolve.json())
-  //     .then(setCountriesList);
-  // };
 
   return (
     <div className={`min-h-screen ${dark && "dark"}`}>
