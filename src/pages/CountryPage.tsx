@@ -72,7 +72,7 @@ const CountryPage = () => {
             <p>
               <b>Currencies:</b>{" "}
               {countryInfo[0].currencies
-                ? countryInfo[0].currencies.map((curr: any, index: number) =>
+                ? countryInfo[0].currencies.map((curr, index: number) =>
                     countryInfo[0].currencies.length - 1 > index
                       ? `${curr.name}, `
                       : `${curr.name}`
@@ -81,7 +81,7 @@ const CountryPage = () => {
             </p>
             <p>
               <b>Languages:</b>{" "}
-              {countryInfo[0].languages.map((lang: any, index: number) =>
+              {countryInfo[0].languages.map((lang, index: number) =>
                 countryInfo[0].languages.length - 1 > index
                   ? `${lang.name}, `
                   : `${lang.name}`
@@ -95,7 +95,7 @@ const CountryPage = () => {
                 {" "}
                 {countryInfo[0].borders.map((alpha3Code: string) => {
                   const borderCountry = countriesList.find(
-                    (obj: any) => obj.alpha3Code === alpha3Code
+                    (obj) => obj.alpha3Code === alpha3Code
                   );
                   return (
                     borderCountry !== undefined && (
