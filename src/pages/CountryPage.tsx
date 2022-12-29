@@ -5,10 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import { fetchCountryInfo } from "../redux/slices/detailsSlice";
 import { useEffect } from "react";
+import { ClipLoader } from "react-spinners";
 
 const CountryPage = () => {
   const { country } = useParams();
-  const { countriesList } = useSelector((state: RootState) => state.countries);
+  const { countriesList, dark } = useSelector(
+    (state: RootState) => state.countries
+  );
   const { countryInfo, isLoading } = useSelector(
     (state: RootState) => state.details
   );
@@ -19,9 +22,9 @@ const CountryPage = () => {
 
   if (isLoading) {
     return (
-      <h1 className="flex flex-col justify-center items-center text-VeryDarkBlue_LM dark:text-White  font-bold">
-        Loading...
-      </h1>
+      <div className="absolute inset-0 flex justify-center items-center">
+        <ClipLoader loading={isLoading} color={dark ? "#ffffff" : "#000000"} />
+      </div>
     );
   }
   return (
