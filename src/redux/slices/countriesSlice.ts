@@ -16,7 +16,7 @@ const initialState = {
   query: "",
   searchResult: <countriesListType>[],
   filterRegion: "Filter by Region",
-  dark: false,
+  dark: true,
   isLoading: false,
   error: null,
 };
