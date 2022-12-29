@@ -1,12 +1,12 @@
+import { AppDispatch, RootState } from "./redux/store";
+import { fetchCountries, setSearchResult } from "./redux/slices/countriesSlice";
+import { Route, Routes } from "react-router-dom";
 import CountryCard from "./components/CountryCard";
+import CountryPage from "./pages/CountryPage";
 import { Header } from "./components/Header";
 import Inputs from "./components/Inputs";
-import { Route, Routes } from "react-router-dom";
-import CountryPage from "./pages/CountryPage";
-import { useEffect } from "react";
-import { AppDispatch, RootState } from "./redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCountries, setSearchResult } from "./redux/slices/countriesSlice";
+import { useEffect } from "react";
 
 type countriesListType = Array<{
   name: string;

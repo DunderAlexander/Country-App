@@ -1,10 +1,10 @@
-import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import { fetchCountryInfo } from "../redux/slices/detailsSlice";
+import { useEffect } from "react";
 
 const CountryPage = () => {
   const { country } = useParams();
