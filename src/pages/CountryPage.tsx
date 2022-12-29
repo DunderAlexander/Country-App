@@ -1,35 +1,21 @@
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../redux/store";
+import { fetchCountryInfo } from "../redux/slices/detailsSlice";
 
 const CountryPage = () => {
   const { country } = useParams();
-  const [countryInfo, setCountryInfo] = useState<any>({});
-  const [isLoading, setIsLoading] = useState(true);
   const { countriesList } = useSelector((state: RootState) => state.countries);
-
-  // fetchCountryInfo has a callback function in it to make sure that loading would be set to false
-  const fetchCountryInfo = (
-    countryName: string | undefined,
-    callback: () => void
-  ): void => {
-    fetch(`https://restcountries.com/v2/name/${countryName}?fullText=true`)
-      .then((res) => res.json())
-      .then(setCountryInfo)
-      .then(callback)
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect((): void => {
-    fetchCountryInfo(country, () => {
-      setIsLoading(false);
-    });
-  }, [country]);
+  const { countryInfo, isLoading } = useSelector(
+    (state: RootState) => state.details
+  );
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(fetchCountryInfo(country));
+  }, [dispatch, country]);
 
   if (isLoading) {
     return (
